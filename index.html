@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Undangan Pernikahan | Teguh & Welly</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#d4af37;
+  --maroon:#7a1f2b;
+  --dark:#0f0f0f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Poppins;background:#000;color:#fff}
+section{min-height:100vh;padding:40px 20px;
+background:url('https://images.unsplash.com/photo-1519681393784-d120267933ba') center/cover}
+.overlay{background:rgba(15,15,15,.75);border-radius:30px;padding:30px;max-width:420px;margin:auto}
+.title{font-family:'Great Vibes';font-size:48px;text-align:center;color:var(--gold)}
+.subtitle{text-align:center;letter-spacing:4px}
+h3{margin-top:20px;color:var(--gold)}
+.card{background:rgba(255,255,255,.08);padding:15px;border-radius:20px;margin-top:10px}
+button{width:100%;margin-top:15px;padding:12px;border:none;border-radius:30px;
+background:linear-gradient(135deg,var(--gold),#f6e27a);font-weight:600}
+input,textarea{width:100%;padding:10px;border-radius:10px;border:none;margin-top:10px}
+.countdown{display:flex;gap:5px;margin-top:15px}
+.cd{flex:1;background:rgba(255,255,255,.1);padding:10px;border-radius:15px;text-align:center}
+</style>
+</head>
+
+<body>
+
+<div id="opening" style="position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center;z-index:999">
+  <div class="overlay">
+    <p style="text-align:center">Kepada Yth</p>
+    <h3 id="guestName" style="text-align:center"></h3>
+    <h1 class="title">Teguh & Welly</h1>
+    <button onclick="openInvite()">Buka Undangan</button>
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+</audio>
+
+<section>
+<div class="overlay">
+
+<p class="subtitle">UNDANGAN PERNIKAHAN</p>
+<h1 class="title">Teguh & Welly</h1>
+<p style="text-align:center">Sabtu, 20 April 2026</p>
+
+<div class="countdown" id="countdown"></div>
+
+<h3>Akad Nikah</h3>
+<div class="card">09.00 WIB<br>Kediaman Mempelai Wanita</div>
+
+<h3>Resepsi</h3>
+<div class="card">11.00 WIB – Selesai<br>Gedung Serbaguna</div>
+
+<button onclick="openMaps()">📍 Buka Google Maps</button>
+
+<h3>RSVP & Ucapan</h3>
+<input id="nama" placeholder="Nama">
+<textarea id="pesan" placeholder="Ucapan & Doa"></textarea>
+<button onclick="kirimWA()">Kirim via WhatsApp</button>
+
+<h3>QR Check-in Tamu</h3>
+<div class="card" style="text-align:center">
+<img id="qr" width="180"><p>Scan saat hadir</p>
+</div>
+
+<h3>Amplop Digital</h3>
+<div class="card" style="text-align:center">
+<b>DANA</b><br>08xxxxxxxxxx<br>a.n Teguh / Welly
+</div>
+
+</div>
+</section>
+
+<script>
+function openInvite(){opening.style.display='none';music.play();}
+const p=new URLSearchParams(location.search);
+const t=p.get('to')||'Tamu Undangan';
+guestName.innerText=t;
+qr.src=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${t}`;
+function openMaps(){window.open('https://maps.google.com/?q=Gedung+Serbaguna')}
+const target=new Date("2026-04-20").getTime();
+setInterval(()=>{
+const n=new Date().getTime();const d=target-n;if(d<0)return;
+countdown.innerHTML=`
+<div class="cd">${Math.floor(d/86400000)}<br>Hari</div>
+<div class="cd">${Math.floor(d%86400000/3600000)}<br>Jam</div>
+<div class="cd">${Math.floor(d%3600000/60000)}<br>Menit</div>
+<div class="cd">${Math.floor(d%60000/1000)}<br>Detik</div>`},1000);
+function kirimWA(){
+if(!nama.value||!pesan.value)return alert('Lengkapi data');
+window.open(`https://wa.me/6281389770774?text=RSVP%20Undangan%20Teguh%20%26%20Welly%0ANama:%20${nama.value}%0APesan:%20${pesan.value}`)}
+</script>
+
+</body>
+</html>
